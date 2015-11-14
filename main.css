@@ -4,6 +4,10 @@ h1 {
 	padding: 0px;
 }
 
+h2 {
+	font-size: 40px;
+	font-family: 'Permanent Marker', cursive;
+}
 body {
 	background-color: #FACC2E
 }
