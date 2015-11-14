@@ -1,0 +1,24 @@
+h1 {
+	font-family: 'Permanent Marker', cursive;
+	font-size: 70px; 
+}
+
+body {
+	background-color: #FACC2E
+}
+
+.item {
+	width: 800px;
+}
+
+.carousel img {
+	min-width: 100%;
+}
+
+#carousel-id {
+	height: 530px;
+	width: 800px;
+	position: relative;
+}
+
+

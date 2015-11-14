@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Workout App</title>
+  <title>Where's the Pie?</title>
 
   <!-- bootstrap css -->
   <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -15,12 +15,58 @@
 
 	<div class="container">
     	<div class="row">
-      		<div class="col-md-6 col-md-offset-3">
+      <div class="col-md-9 col-md-offset-1">
+            <h1 class="text-center">Where's the Pie?<link href='https://fonts.googleapis.com/css?family=Permanent+Marker' rel='stylesheet' type='text/css'></h1><br><br>
+    
+            <ul id="pies-list">
+            <script id="pies-template" type="text/x-handlebars-template">
+            \{{#each pies}}
+              <li><strong>\{{pie}}</strong>- \{{kind}}</li>
+            \{{/each}}
+          </script>
 
-			</div>
-		</div>
-	</div>
-
+<div id="carousel-id" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#carousel-id" data-slide-to="0" class=""></li>
+        <li data-target="#carousel-id" data-slide-to="1" class=""></li>
+        <li data-target="#carousel-id" data-slide-to="2" class="active"></li>
+    </ol>
+    <div class="carousel-inner">
+        <div class="item">
+            <img data-src="holder.js/900x500/auto/#777:#7a7a7a/text:First slide" alt="First slide" src="http://photojennic.typepad.com/.a/6a013486ce9ee4970c0133f42f8d8a970b-500pi">
+            <div class="container">
+                <div class="carousel-caption">
+                    <h1>Fruit Pies</h1>
+                
+                    <p><a class="btn btn-lg btn-primary" href="#" role="button">and more...</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <img data-src="holder.js/900x500/auto/#666:#6a6a6a/text:Second slide" alt="Second slide" src="http://api2.ning.com/files/-MeNb2aDJx0pI2NnAP0ULbe9fIrq-LBGC2269eGuEO-OokdtzfLvHLYwfSvMH1j1pVfFa9AQHZU31EsQFARecDZ87OJ*njzG/Rigatoni_Pasta_Pie_8.jpg?width=420">
+            <div class="container">
+                <div class="carousel-caption">
+                    <h1>Savory Pies</h1>
+                    
+                    <p><a class="btn btn-lg btn-primary" href="#" role="button">and more...</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="item active">
+            <img data-src="holder.js/900x500/auto/#555:#5a5a5a/text:Third slide" alt="Third slide" src="http://toppingspies.co.uk/media/catalog/product/cache/1/image/1200x/040ec09b1e35df139433887a97daa66f/5/2/52.jpg">
+            <div class="container">
+                <div class="carousel-caption">
+                    <h1>International Pies</h1>
+                    
+                    <p><a class="btn btn-lg btn-primary" href="#" role="button">and more...</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a class="left carousel-control" href="#carousel-id" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+    <a class="right carousel-control" href="#carousel-id" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+</div>
+</div>
   <!-- jquery -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
 
