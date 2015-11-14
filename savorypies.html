@@ -19,7 +19,14 @@
     <br>
     <br>
 		<h2 class="text-center">Savory Pies<link href='https://fonts.googleapis.com/css?family=Permanent+Marker' rel='stylesheet' type='text/css'></h2>
-		</div>
+          <ul id="savoryPies-list">
+            <script id="savoryPies-template" type="text/x-handlebars-template">
+            \{{#each savoryPies}}
+              <li><strong>\{{savoryPie}}</strong></li>
+            \{{/each}}
+            </script>
+          </ul>
+		  </div>
 	</div>
 
   <!-- jquery -->
