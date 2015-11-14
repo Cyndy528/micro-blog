@@ -3,8 +3,16 @@ var express = require('express'),
 	app = express(), 
 	bodyParser = require('body-parser'); 
 
-// HOMEPAGE ROUTE
+//configure body-parser (for form data)
+app.user(bodyParser.urlencoded({ extended: true})); 
 
+//use public folder for static files
+app.use(express.static(_dirname + '/public')); 
+
+//set hbs as server view engine
+app.set('view engine', 'hbs'); 
+
+// HOMEPAGE ROUTE
 app.get('/', function(req,res) {
 	res.send('hello world');
 });
