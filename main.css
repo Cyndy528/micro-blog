@@ -1,6 +1,7 @@
 h1 {
 	font-family: 'Permanent Marker', cursive;
-	font-size: 70px; 
+	font-size: 60px; 
+	padding: 0px;
 }
 
 body {
@@ -21,4 +22,9 @@ body {
 	position: relative;
 }
 
+p {
+	font-family: 'Ubuntu Condensed', sans-serif;
+	font-size: 18px;
+	text-align: center;
+}
 
