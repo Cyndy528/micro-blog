@@ -68,7 +68,7 @@
               \{{/if}}
 
               </div>
-              <div class="col-md-8 col-md-offset-2 ">
+              <div class="col-md-8 col-md-offset-2">
 
               \{{#if kind}}
               <h2>\{{kind}}</h2>
@@ -79,15 +79,32 @@
               <form role="form" class="edit-form" id="form\{{_id}}">
               <div class="form-group">
 
-              <input type=
-               
-            </div>
-            </div>
-             
-          </script>
-    
-      </div>
-</div>
+              <input type="text" class="form-control" name="name" placeholder="name" value="\{{name}}"> 
+              </div> 
+
+        <input type="submit" class="btn btn-warning" id="save" value ="Edit">
+                     </div>
+                   </form>
+                 </div>
+                 <div class="col-md-8 col-md-offset-2">  
+                   <button type="button" class="btn btn-default edit-button" aria-label="Left Align" id="\{{_id}}">
+                     <span class="glyphicon glyphicon-edit glyphicon-align-left" aria-hidden="true">
+                     </span>
+                   </button>
+                   <button type="button" class="btn btn-default delete-button" aria-label="Left Align" id="del\{{_id}}">
+                     <span class="glyphicon glyphicon-remove-circle glyphicon-align-left" aria-hidden="true">
+                     </span>
+                   </button>
+                 </div>  
+               </div>
+               <hr>
+             \{{/each}}
+           </script>
+         </div>
+       </div>
+     </div>
+   </div>
+   
   <!-- jquery -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
 
