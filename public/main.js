@@ -5,7 +5,7 @@ $(function() {
 	var template = Handlebars.compile(source);
 
 	//array of test data
-	var allPies = [
+	var pie = [
 		{fruitPie: 'Bosenberry'}, 
 		{fruitPie: 'Apple'}, 
 		{fruitPie: 'Banana Cream Pie'},
@@ -26,7 +26,7 @@ $(function() {
     $('#pies-list').append(piesHtml);
   		
   	});
-  
+
 }); 
 
 

@@ -53,16 +53,39 @@
     </div>
     <a class="left carousel-control" href="#carousel-id" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
     <a class="right carousel-control" href="#carousel-id" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
-
-
-          <ul id="pies-list">
+    <br>
+    <br>
+          <div id="pies-list">
           <script id="pies-template" type="text/x-handlebars-template">
             \{{#each pies}}
-              <li><strong>\{{name}}</strong> - \{{kind}}</li>
-            \{{/each}}
-          </script>
-        </ul>
+              <div class="row" id="row\{{_id}}">
+              <div class="col-md-8 col-md-offset-2 name-column"
+              <input type="checkbox" class="check" id="checked\{{_id}}">
 
+              \{{/if name}}
+              <span class="pie-name">/{{name}}</span>
+
+              \{{/if}}
+
+              </div>
+              <div class="col-md-8 col-md-offset-2 ">
+
+              \{{#if kind}}
+              <h2>\{{kind}}</h2>
+              \{{else}}
+              <h3>Not a specific kind</h3>
+              \{{/if}}
+
+              <form role="form" class="edit-form" id="form\{{_id}}">
+              <div class="form-group">
+
+              <input type=
+               
+            </div>
+            </div>
+             
+          </script>
+    
       </div>
 </div>
   <!-- jquery -->
