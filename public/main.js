@@ -3,6 +3,9 @@ $(function() {
 	//compile handlebars templates
 	var source = $('#pies-template').html();
 	var template = Handlebars.compile(source);
+	var baseUrl = "/api/pies"; 
+	var allPies = [];
+	var $pies-list =$()
 
 	//array of test data
 	var pie = [
@@ -28,6 +31,8 @@ $(function() {
   	});
 
 }); 
+
+
 
 
 

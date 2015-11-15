@@ -2,23 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+
+<!--   make site responsive -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Where's the Pie?</title>
 
   <!-- bootstrap css -->
   <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
   <!-- custom styles -->
   <link type="text/css" rel="stylesheet" href="main.css">
+
+  <title>Where's the Pie?</title>
 </head>
 <body>
 
+<!-- header -->
 	<div class="container">
     	<div class="row">
       <div class="col-md-9 col-md-offset-1">
             <h1 class="text-center">Where's the Pie?<link href='https://fonts.googleapis.com/css?family=Permanent+Marker' rel='stylesheet' type='text/css'></h1>
         <p>You're at a holiday dinner and someone forgot to bring the pie. Nnnoooooo!!! What do you do? Well, you look for pie. Somewhere out there, there has to be pie.</p><p>I can't send a pie directly to you, but I know how it feels not to have pie, so I've been a blog about pies. Here's a collection of some fruit, savory, and international pies. Check them them and see what you find, and don't forgot to post your fav pie.</p><link href='https://fonts.googleapis.com/css?family=Ubuntu+Condensed' rel='stylesheet' type='text/css'></p>
 
+<!-- Carousel with photos -->
 <div id="carousel-id" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
         <li data-target="#carousel-id" data-slide-to="0" class=""></li>
@@ -55,52 +60,70 @@
     <a class="right carousel-control" href="#carousel-id" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
     <br>
     <br>
-          <div id="pies-list">
+
+<!-- page content -->
+  <div class="container">
+    <div class="row">
+      <div class="center">
+
+         <!-- new pie form-->
+        <form class="form-inline" id="create-pie">
+          <div class="form-group">
+            <input type="text" name="name" class="form-control" placeholder="Name" autofocus>
+          </div>
+          <div class="form-group">
+            <input type="text" name="kind" class="form-control" placeholder="Kind">
+          </div>
+          <div class="form-group">
+            <input type="submit" class="btn btn-default" value="Add To List">
+          </div>
+        </form>
+        <br>
+
+        <!-- list of pies -->
+        <ul class="list-group" id="pies-list">
+          
+          <!-- handlebars template -->
           <script id="pies-template" type="text/x-handlebars-template">
             \{{#each pies}}
-              <div class="row" id="row\{{_id}}">
-              <div class="col-md-8 col-md-offset-2 name-column"
-              <input type="checkbox" class="check" id="checked\{{_id}}">
+              <li class="list-group-item pie" data-id="\{{_id}}">
+                <!-- pie label (name) -->
+                <span class="label label-default">\{{name}}</span>
+                
+              // pie kind
+                \{{kind}}
+                <div class="pull-right">
 
-              \{{/if name}}
-              <span class="pie-name">/{{name}}</span>
-
-              \{{/if}}
-
-              </div>
-              <div class="col-md-8 col-md-offset-2">
-
-              \{{#if kind}}
-              <h2>\{{kind}}</h2>
-              \{{else}}
-              <h3>Not a specific kind</h3>
-              \{{/if}}
-
-              <form role="form" class="edit-form" id="form\{{_id}}">
-              <div class="form-group">
-
-              <input type="text" class="form-control" name="name" placeholder="name" value="\{{name}}"> 
-              </div> 
-
-        <input type="submit" class="btn btn-warning" id="save" value ="Edit">
-                     </div>
-                   </form>
-                 </div>
-                 <div class="col-md-8 col-md-offset-2">  
-                   <button type="button" class="btn btn-default edit-button" aria-label="Left Align" id="\{{_id}}">
-                     <span class="glyphicon glyphicon-edit glyphicon-align-left" aria-hidden="true">
-                     </span>
-                   </button>
-                   <button type="button" class="btn btn-default delete-button" aria-label="Left Align" id="del\{{_id}}">
-                     <span class="glyphicon glyphicon-remove-circle glyphicon-align-left" aria-hidden="true">
-                     </span>
-                   </button>
-                 </div>  
-               </div>
-               <hr>
-             \{{/each}}
-           </script>
-         </div>
+                  // toggle update form 
+                  <a href="javascript:void(0)" data-toggle="collapse" data-target="#update-\{{_id}}">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                  </a>
+                  
+                  // trash can icon to delete pie 
+                   <a href="javascript:void(0)" class="delete-pie">
+                    <span class="glyphicon glyphicon-trash"></span>
+                  </a>
+                </div>
+                
+                // form to update pie
+                <div class="collapse" id="update-\{{_id}}">
+                  <br>
+                  <form class="form-inline update-pie">
+                    <div class="form-group">
+                      <input type="text" name="name" class="form-control" placeholder="Name" value="\{{name}}">
+                    </div>
+                    <div class="form-group">
+                      <input type="text" name="kind" class="form-control" placeholder="Kind" value="\{{kind}}">
+                    </div>
+                    <div class="form-group">
+                      <input type="submit" class="btn btn-block btn-default" value="Update">
+                    </div>
+                  </form>
+                </div>
+              </li>
+            \{{/each}}
+          </script>
+        </ul>
        </div>
      </div>
    </div>

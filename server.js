@@ -2,7 +2,6 @@
 var express = require('express'); 
 	app = express();
 	bodyParser = require('body-parser'); 
-	hbs = require ('hbs'); 
 	mongoose = require('mongoose'); 
 
 //configure body-parser (for form data)
@@ -10,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: true}));
 
 // use public folder for static files
 // app.use(express.static(__dirname + '/public'));
-app.use(express.static("public")); 
+app.use(express.static(__dirname + "/public")); 
 
 //set hbs as server view engine
 app.set('view engine', 'hbs'); 
@@ -49,29 +48,21 @@ app.get('/', function(req,res) {
 	// 	kind: 'International'}
 	// ];
 
-// Set up pies api
+// Set up pies API
+
+//get all pies
 app.get('/api/pies', function (req, res) {
   //find all pies in database
   Pie.find(function (err, allPies) {
-  	res.json ({ pies: allPies}); 
+  	if (err){
+  		res.status(500).json({	error: err.message}); 
+  	} else {
+  		res.json({	pies: allPies}); 
+  	}
 	});
 }); 
 
-// get a single beer
-app.get('/api/pies/:id', function(req, res){
-
-	// get beer id from URL params
-	var pieID = parseInt(req.params.id); 
-
-	// find pie by id
-	var foundPie = pies.filter(function(pie){
-		return pies._id == pieID; 
-	}); 
-
-	//send foundPie as JSON 
-	res.json(foundPie); 
-}); 
-// post a single pie
+// create new pie
 app.post('api/pies', function(req, res){
 
 	// create a new pie with form data
@@ -79,54 +70,78 @@ app.post('api/pies', function(req, res){
 
 	// save new pie in database
 	new Pie.save(function(err, savedPie){
-		res.json(savedPie);
-	});
-
+		if (err) {
+			res.status(500).json ({	error: err.message}); 
+		} else {
+		  res.json(savedPie);
+		}
+	}); 
 }); 
+
+// get a single pie
+app.get('/api/pies/:id', function(req, res){
+
+	// get pie id from URL params
+	var pieID = req.params.id; 
+
+// find pie in database by id
+Pie.findOne({ _id: pieId }, function (err, foundTodo) {
+    if (err) {
+      if (err.name === "CastError") {
+        res.status(404).json({ error: "No ID Match." });
+      } else {
+        res.status(500).json({ error: err.message });
+      }
+    } else {
+      res.json(foundPie);
+    }
+  });
+});		
+	 
 //update pie
 app.put ('api/pies/:id', function (req, res) {
 	//get pie id from url params ('req.params')
-	var pieID = parseInt(req.params.id); 
+	var pieID = req.params.id; 
 
-	//find pie to update it's id
-	var pieToUpDate = pies.filter(function(pie){ 
-		return pie._id === pieId; 
-	}) [0]; 
-	//update the pie's name
-	pieToUpDate.name = req.body.task;
-	
-	//update the pie kind
-	pieToUpDate.kind = req.body.kind;
-	
-	//send back updated pie
-	res.json(pieToUpDate); 
+//find pie to update id
+Pie.findOne({ _id: pieId }, function (err, foundPie) {
+    if (err) {
+      res.status(500).json({ error: err.message });
+    } else {
+      // update the pie's attributes
+      foundPie.name = req.body.name;
+      foundPie.kind = req.body.kind;
+
+      // save updated todo in db
+      foundPie.save(function (err, savedPie) {
+        if (err) {
+          res.status(500).json({ error: err.message });
+        } else {
+          res.json(savedPie);
+        }
+      });
+    }
+  });
 });
-
 
 //delete pie
 app.delete('api/pies/:id', function(req, res){
 
-	// get pie id from url params ('req.params')
-	var pieID= parseInt(req.params.id); 
+// get pie id from url params ('req.params')
+var pieID= req.params.id; 
 
-	//find pie to delete by its id
-	var pieToDelete = pie.filter(function(pie) {
-		return pie._id === pieId; 
-	}) [0]; 
-
-	//find index of pie in 'pie' array
-	var pieIndex = pie.indexOf(pieToDelete); 
-
-	//remove pie from 'pie' array
-	pie.splice(pieIndex, 1); 
-
-	//send back deleted todo
-	res.json(pieToDelete); 
-	
-}); 
+//find pie to delete by its id
+  Pie.findOneAndRemove({ _id: pieId }, function (err, deletedTodo) {
+    if (err) {
+      res.status(500).json({ error: err.message });
+    } else {
+      res.json(deletedPie);
+    }
+  });
+});
 
 // listen on port 3000
-var server=app.listen(process.env.PORT || 3000, function(){
+app.listen( 3000, function(){
 	console.log('I am listening'); 
 }); 
 
