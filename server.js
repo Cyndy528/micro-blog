@@ -14,10 +14,10 @@ app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'hbs'); 
 
 // connect to mongodb
-mongoose.connect('mongodb://localhost/pies-app'); 
+mongoose.connect('mongodb://localhost/pie-app'); 
 
 // require Pie model 
-var Pie = require('./models/pies'); 
+var Pie = require('./models/pie'); 
 
 // HOMEPAGE ROUTE
 app.get('/', function(req,res) {
@@ -26,21 +26,21 @@ app.get('/', function(req,res) {
 
 // API Routes 
 // Test data
-	var pies = [
-		{fruitPie: 'Bosenberry'}, 
-		{fruitPie: 'Apple'}, 
-		{fruitPie: 'Banana Cream Pie'},
-		{savoryPie: 'Chicken Pot Pie'},
-		{savoryPie: 'Spinach and Cheddar Tart'}, 
-		{savoryPie: "Shepherd's Pie"},
-		{internationalPie: 'Chicken Pot Pie'},
-		{internationalPie: 'Aloo Pie'}, 
-		{internationalPie: 'Linzertorte'}
-	];
+	// var pies = [
+	// 	{fruitPie: 'Bosenberry'}, 
+	// 	{fruitPie: 'Apple'}, 
+	// 	{fruitPie: 'Banana Cream Pie'},
+	// 	{savoryPie: 'Chicken Pot Pie'},
+	// 	{savoryPie: 'Spinach and Cheddar Tart'}, 
+	// 	{savoryPie: "Shepherd's Pie"},
+	// 	{internationalPie: 'Chicken Pot Pie'},
+	// 	{internationalPie: 'Aloo Pie'}, 
+	// 	{internationalPie: 'Linzertorte'}
+	// ];
 
 app.get('/api/pies', function (req, res) {
-  Pies.find(function (err, pies) {
-    res.json({ pies: allpies });
+  Pie.find(function (err, allPies) {
+    res.json({ pies: allPies });
   });
 });
 

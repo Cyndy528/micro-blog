@@ -25,7 +25,8 @@ $(function() {
     var piesHtml = template({ pies: allPies });
     $('#pies-list').append(piesHtml);
   		
-  		});
+  	});
+  
 }); 
 
 
