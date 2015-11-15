@@ -1,14 +1,16 @@
 // require express and other modules
-var express = require('express'), 
-	app = express(), 
+var express = require('express'); 
+	app = express();
 	bodyParser = require('body-parser'); 
+	hbs = require ('hbs'); 
 	mongoose = require('mongoose'); 
 
 //configure body-parser (for form data)
 app.use(bodyParser.urlencoded({ extended: true})); 
 
 // use public folder for static files
-app.use(express.static(__dirname + '/public'));
+// app.use(express.static(__dirname + '/public'));
+app.use(express.static("public")); 
 
 //set hbs as server view engine
 app.set('view engine', 'hbs'); 
@@ -19,47 +21,40 @@ mongoose.connect('mongodb://localhost/pie-app');
 // require Pie model 
 var Pie = require('./models/pie'); 
 
-// HOMEPAGE ROUTE
+// Set up routes
 app.get('/', function(req,res) {
 	res.render('index');
 });
 
-// API Routes 
+ 
 // Test data
-	var pies = [
-		{pie: 'Bosenberry',
-		kind: 'Fruit'}, 
-		{pie: 'Apple',
-		kind: 'Fruit'}, 
-		{pie: 'Banana Cream Pie',
-		kind: 'Fruit'},
-		{pie: 'Chicken Pot Pie',
-		kind: 'Savory'},
-		{pie: 'Spinach and Cheddar Tart',
-		kind: 'Savory'}, 
-		{pie: "Shepherd's Pie",
-		kind: 'Savory'},
-		{pie: 'Minced Meat Pie',
-		kind: 'International'},
-		{pie: 'Aloo Pie',
-		kind: 'International'}, 
-		{pie: 'Linzertorte',
-		kind: 'International'}
-	];
+	// var pies = [
+	// 	{pie: 'Bosenberry',
+	// 	kind: 'Fruit'}, 
+	// 	{pie: 'Apple',
+	// 	kind: 'Fruit'}, 
+	// 	{pie: 'Banana Cream Pie',
+	// 	kind: 'Fruit'},
+	// 	{pie: 'Chicken Pot Pie',
+	// 	kind: 'Savory'},
+	// 	{pie: 'Spinach and Cheddar Tart',
+	// 	kind: 'Savory'}, 
+	// 	{pie: "Shepherd's Pie",
+	// 	kind: 'Savory'},
+	// 	{pie: 'Minced Meat Pie',
+	// 	kind: 'International'},
+	// 	{pie: 'Aloo Pie',
+	// 	kind: 'International'}, 
+	// 	{pie: 'Linzertorte',
+	// 	kind: 'International'}
+	// ];
 
-// API Routes
+// Set up pies api
 app.get('/api/pies', function (req, res) {
-  Pie.find(function (err, allPies) {
-    res.json({ pies: allPies });
-  });
+  //find all pies in database
   Pie.find(function (err, allPies) {
   	res.json ({ pies: allPies}); 
 	});
-}); 
-
-// set all pies
-app.get('/api/pies', function(req, res){
-	res.json ( pies ); 
 }); 
 
 // get a single beer
@@ -80,24 +75,58 @@ app.get('/api/pies/:id', function(req, res){
 app.post('api/pies', function(req, res){
 
 	// create a new pie with form data
-	var newPies = req.body; 
+	var newPies = new Pie (req.body); 
 
-	//set a sequential id, only checking
-	if (pies.length > 0){
-		newPies.id = pies[pies.length -1]._id + 1; 
-	} else {
-		newPies._id = 1; 
-	}
+	// save new pie in database
+	new Pie.save(function(err, savedPie){
+		res.json(savedPie);
+	});
+
+
+//update pie
+app.put ('api/pies/:id', function (req, res) {
+	//get pie id from url params ('req.params')
+	var pieID = parseInt(req.params.id); 
+
+	//find pie to update it's id
+	var pieToUpDate = pies.filter(function(pie){ 
+		return pie._id === pieId; 
+	}) [0]; 
+	//update the pie's name
+	pieToUpDate.name = req.body.task;
 	
-	//add new pie to 'pies' array
-	pies.push(newPies); 
+	//update the pie kind
+	pieToUpDate.kind = req.body.kind;
+	
+	//send back updated pie
+	res.json(pieToUpDate); 
+});
 
-	//send newPie as JSON object
-	res.json (newPies); 
+
+//delete pie
+app.delete('api/pies/:id', function(req, res){
+
+	// get pie id from url params ('req.params')
+	var pieID= parseInt(req.params.id); 
+
+	//find pie to delete by its id
+	var pieToDelete = pie.filter(function(pie) {
+		return pie._id === pieId; 
+	}) [0]; 
+
+	//find index of pie in 'pie' array
+	var pieIndex = pie.indexOf(pieToDelete); 
+
+	//remove pie from 'pie' array
+	pie.splice(pieIndex, 1); 
+
+	//send back deleted todo
+	res.json(pieToDelete); 
+	
 }); 
 
-// start server on localhost:3000
-app.listen(3000, function() {
-  console.log('server started');
-});
+// listen on port 3000
+var server=app.listen(process.env.PORT || 3000, function(){
+	console.log('I am listening'); 
+}); 
 
