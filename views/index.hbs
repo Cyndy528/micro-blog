@@ -31,8 +31,6 @@
             <div class="container">
                 <div class="carousel-caption">
                     <h1>Fruit Pies</h1>
-                
-                    <p><a class="btn btn-lg btn-primary" href="file:///Users/anilpanicker/develop/microblog/fruitpies.html" role="button">check 'em out!</a></p>
                 </div>
             </div>
         </div>
@@ -41,7 +39,6 @@
             <div class="container">
                 <div class="carousel-caption">
                     <h1>Savory Pies</h1>
-                    <p><a class="btn btn-lg btn-primary" href="file:///Users/anilpanicker/develop/microblog/savorypies.html" role="button">check 'em out!</a></p>
                 </div>
             </div>
         </div>
@@ -50,8 +47,6 @@
             <div class="container">
                 <div class="carousel-caption">
                     <h1>International Pies</h1>
-                    
-                    <p><a class="btn btn-lg btn-primary" href="file:///Users/anilpanicker/develop/microblog/internationalpies.html" role="button">check 'em out!</a></p>
                 </div>
             </div>
         </div>
@@ -60,6 +55,15 @@
     <a class="right carousel-control" href="#carousel-id" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
 </div>
 </div>
+        <ul id="pies-list">
+          <script id="pies-template" type="text/x-handlebars-template"> \{{#each pies}}
+          <li><strong>\{{pie}}</strong>- \{{kind}}</li>
+          \{{/each}}
+          </script>
+          </ul>
+    </div>
+  </div>
+
   <!-- jquery -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
 

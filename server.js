@@ -2,6 +2,7 @@
 var express = require('express'), 
 	app = express(), 
 	bodyParser = require('body-parser'); 
+	mongoose = require('mongoose'); 
 
 //configure body-parser (for form data)
 app.use(bodyParser.urlencoded({ extended: true})); 
@@ -12,6 +13,12 @@ app.use(express.static(__dirname + '/public'));
 //set hbs as server view engine
 app.set('view engine', 'hbs'); 
 
+// connect to mongodb
+mongoose.connect('mongodb://localhost/pies-app'); 
+
+// require Pie model 
+var Pie = require('./models/pies'); 
+
 // HOMEPAGE ROUTE
 app.get('/', function(req,res) {
 	res.render('index');
@@ -19,29 +26,21 @@ app.get('/', function(req,res) {
 
 // API Routes 
 // Test data
-	var allFruitPies = [
+	var pies = [
 		{fruitPie: 'Bosenberry'}, 
 		{fruitPie: 'Apple'}, 
-		{fruitPie: 'Banana Cream Pie'}
-	];
-
-	//array of test data
-	var allSavoryPies = [
+		{fruitPie: 'Banana Cream Pie'},
 		{savoryPie: 'Chicken Pot Pie'},
 		{savoryPie: 'Spinach and Cheddar Tart'}, 
-		{savoryPie: "Shepherd's Pie"}
-	];
-
-	//array of test data
-	var allInternationalPies = [
+		{savoryPie: "Shepherd's Pie"},
 		{internationalPie: 'Chicken Pot Pie'},
 		{internationalPie: 'Aloo Pie'}, 
 		{internationalPie: 'Linzertorte'}
 	];
 
-app.get('/api/FruitPies', function (req, res) {
-  FruitPies.find(function (err, allFruitPies) {
-    res.json({ FruitPies: allFruitPies });
+app.get('/api/pies', function (req, res) {
+  Pies.find(function (err, pies) {
+    res.json({ pies: allpies });
   });
 });
 
