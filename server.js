@@ -26,24 +26,75 @@ app.get('/', function(req,res) {
 
 // API Routes 
 // Test data
-	// var pies = [
-	// 	{fruitPie: 'Bosenberry'}, 
-	// 	{fruitPie: 'Apple'}, 
-	// 	{fruitPie: 'Banana Cream Pie'},
-	// 	{savoryPie: 'Chicken Pot Pie'},
-	// 	{savoryPie: 'Spinach and Cheddar Tart'}, 
-	// 	{savoryPie: "Shepherd's Pie"},
-	// 	{internationalPie: 'Chicken Pot Pie'},
-	// 	{internationalPie: 'Aloo Pie'}, 
-	// 	{internationalPie: 'Linzertorte'}
-	// ];
+	var pies = [
+		{pie: 'Bosenberry',
+		kind: 'Fruit'}, 
+		{pie: 'Apple',
+		kind: 'Fruit'}, 
+		{pie: 'Banana Cream Pie',
+		kind: 'Fruit'},
+		{pie: 'Chicken Pot Pie',
+		kind: 'Savory'},
+		{pie: 'Spinach and Cheddar Tart',
+		kind: 'Savory'}, 
+		{pie: "Shepherd's Pie",
+		kind: 'Savory'},
+		{pie: 'Minced Meat Pie',
+		kind: 'International'},
+		{pie: 'Aloo Pie',
+		kind: 'International'}, 
+		{pie: 'Linzertorte',
+		kind: 'International'}
+	];
 
+// API Routes
 app.get('/api/pies', function (req, res) {
   Pie.find(function (err, allPies) {
     res.json({ pies: allPies });
   });
-});
+  Pie.find(function (err, allPies) {
+  	res.json ({ pies: allPies}); 
+	});
+}); 
 
+// set all pies
+app.get('/api/pies', function(req, res){
+	res.json ( pies ); 
+}); 
+
+// get a single beer
+app.get('/api/pies/:id', function(req, res){
+
+	// get beer id from URL params
+	var pieID = parseInt(req.params.id); 
+
+	// find pie by id
+	var foundPie = pies.filter(function(pie){
+		return pies._id == pieID; 
+	}); 
+
+	//send foundPie as JSON 
+	res.json(foundPie); 
+}); 
+// post a single pie
+app.post('api/pies', function(req, res){
+
+	// create a new pie with form data
+	var newPies = req.body; 
+
+	//set a sequential id, only checking
+	if (pies.length > 0){
+		newPies.id = pies[pies.length -1]._id + 1; 
+	} else {
+		newPies._id = 1; 
+	}
+	
+	//add new pie to 'pies' array
+	pies.push(newPies); 
+
+	//send newPie as JSON object
+	res.json (newPies); 
+}); 
 
 // start server on localhost:3000
 app.listen(3000, function() {
