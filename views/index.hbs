@@ -92,7 +92,8 @@
                 <span class="label label-default">\{{name}}</span>
                 
             
-                \{{kind}}
+                \{{kind}} 
+                \{{location}}
                 <div class="pull-right">
 
                 
@@ -111,10 +112,13 @@
                   <br>
                   <form class="form-inline update-pie">
                     <div class="form-group">
-                      <input type="text" name="name" class="form-control" placeholder="Name" value="\{{name}}">
+                      <input type="text" name="name" class="form-control" placeholder="Name" >
                     </div>
                     <div class="form-group">
-                      <input type="text" name="kind" class="form-control" placeholder="Kind" value="\{{kind}}">
+                      <input type="text" name="kind" class="form-control" placeholder="Kind" >
+                    </div>
+                    <div class="form-group">
+                      <input type="text" name="location" class="form-control" placeholder="Location">
                     </div>
                     <div class="form-group">
                       <input type="submit" class="btn btn-block btn-default" value="Update">

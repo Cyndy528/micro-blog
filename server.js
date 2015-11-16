@@ -81,7 +81,7 @@ app.get('/api/pies/:id', function(req, res){
 	      res.json(foundPie);
 	  });
 });		
-	 
+
 //update pie
 app.put ('api/pies/:id', function (req, res) {
 	//get pie id from url params ('req.params')
@@ -93,6 +93,7 @@ Pie.findOne({ _id: pieId }, function (err, foundPie) {
       // update the pie's attributes
       foundPie.name = req.body.name;
       foundPie.kind = req.body.kind;
+      foundPie.location = req.body.location;
 
       // save updated pie in db
       foundPie.save(function (err, savedPie) {

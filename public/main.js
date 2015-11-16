@@ -44,7 +44,7 @@ $.get(baseUrl, function (data){
 }); 
 
 //listen for submit on form
-$("create-pies").on('submit', function (event){
+$("create-pie").on('submit', function (event){
 	event.preventDefault(); 
 
 	//serialize form data
@@ -70,16 +70,23 @@ $("create-pies").on('submit', function (event){
 
 
 	//for update: submit event on '.update-pie' form 
-	$("#piesList").on("submit", ".update-pie", function (event){
+	$("#piesList").on("click", ".update-pie", function (event){
 		event.preventDefault(); 
 
 	//find the pie's id 
-	var pieId = $(this).closest('.pie').attr('data-id'); 
+	var pieId = $(this).attr('data-id'); 
 
 	//find the pie to update by its id
-	var pieToUpdate = allPies.filter(function (pie){
+	var pieToUpdate = allPies.filter(function(pie){
 		return pie._id == pieId; 
 	}) [0]; 
+
+	var pieToUpdateIndex = allPies.indexOf(pieToUpdate); 
+		var $updateForm = $('#form' + pieId); 
+		$updateForm.toggle(); 
+
+	$("#pies-list").on("submit", $updateForm, function(event){
+		event.preventDefault(); 
 
 	//serialize form data
 	var updatedPie = $(this).serialize(); 
@@ -104,10 +111,10 @@ $("create-pies").on('submit', function (event){
 	event.preventDefault(); 
 
 	//find pie id
-	var pieId = $(this).closest('.pie').attr('data-id'); 
+	var pieId = $(this).attr('.pieId').slice(3);  
 
 	//find the pie to delete by its id
-	var pieToDelete = allPies.filter(function (pie){
+	var pieToDelete = allPies.filter(function(pie){
 		return pie._id == pieId; 
 	}) [0]; 
 
@@ -119,12 +126,11 @@ $("create-pies").on('submit', function (event){
 			//remove deleted pie from all pies
 			allPies.splice(allPies.indexOf(pieToDelete), 1); 
 		
-          // render all piess to view
+          // render all pies to view
           render();
-        }
-      });
- 
-   });  
+      	}
+     });
+});  
 
  
 
