@@ -131,7 +131,7 @@ $("create-pie").on('submit', function (event){
       	}
      });
 });  
-
+}); 
  
 
 
