@@ -51,16 +51,12 @@ app.get('/', function(req,res) {
 // Set up pies API
 
 //get all pies
-app.get('/api/pies', function (req, res) {
-  //find all pies in database
-  Pie.find(function (err, allPies) {
-  	if (err){
-  		res.status(500).json({	error: err.message}); 
-  	} else {
-  		res.json({	pies: allPies}); 
-  	}
-	});
-}); 
+  app.get('/api/pies', function (req, res) {
+    // find all pies in database
+    Pie.find(function (err, allPies) {
+      res.json({ pies: allPies });
+    });
+  });
 
 // create new pie
 app.post('api/pies', function(req, res){
@@ -70,11 +66,7 @@ app.post('api/pies', function(req, res){
 
 	// save new pie in database
 	new Pie.save(function(err, savedPie){
-		if (err) {
-			res.status(500).json ({	error: err.message}); 
-		} else {
 		  res.json(savedPie);
-		}
 	}); 
 }); 
 
@@ -84,18 +76,10 @@ app.get('/api/pies/:id', function(req, res){
 	// get pie id from URL params
 	var pieID = req.params.id; 
 
-// find pie in database by id
-Pie.findOne({ _id: pieId }, function (err, foundTodo) {
-    if (err) {
-      if (err.name === "CastError") {
-        res.status(404).json({ error: "No ID Match." });
-      } else {
-        res.status(500).json({ error: err.message });
-      }
-    } else {
-      res.json(foundPie);
-    }
-  });
+	// find pie in database by id
+	Pie.findOne({ _id: pieId }, function (err, foundPie) {
+	      res.json(foundPie);
+	  });
 });		
 	 
 //update pie
@@ -105,40 +89,29 @@ app.put ('api/pies/:id', function (req, res) {
 
 //find pie to update id
 Pie.findOne({ _id: pieId }, function (err, foundPie) {
-    if (err) {
-      res.status(500).json({ error: err.message });
-    } else {
+
       // update the pie's attributes
       foundPie.name = req.body.name;
       foundPie.kind = req.body.kind;
 
-      // save updated todo in db
+      // save updated pie in db
       foundPie.save(function (err, savedPie) {
-        if (err) {
-          res.status(500).json({ error: err.message });
-        } else {
           res.json(savedPie);
-        }
-      });
-    }
-  });
+        });
+  	});
 });
 
 //delete pie
 app.delete('api/pies/:id', function(req, res){
 
-// get pie id from url params ('req.params')
-var pieID= req.params.id; 
+	// get pie id from url params ('req.params')
+	var pieID= req.params.id; 
 
-//find pie to delete by its id
-  Pie.findOneAndRemove({ _id: pieId }, function (err, deletedTodo) {
-    if (err) {
-      res.status(500).json({ error: err.message });
-    } else {
-      res.json(deletedPie);
-    }
-  });
-});
+	//find pie to delete by its id and remove 
+	  Pie.findOneAndRemove({ _id: pieId }, function (err, deletedPie) {
+	      res.json(deletedPie);
+	  });
+	});
 
 // listen on port 3000
 app.listen( 3000, function(){
