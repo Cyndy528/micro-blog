@@ -11,34 +11,25 @@ $(function() {
 	var allPies = [];
 
 	//element to display list from pies
-	var $pieslist =$('#pies-list'); 
+	var $piesList =$('#pies-list'); 
 
 	// form to create new pie
 	var $createPie = $('#create-pie'); 
 
-	//array of test data
-	// var pie = [
-	// 	{fruitPie: 'Bosenberry'}, 
-	// 	{fruitPie: 'Apple'}, 
-	// 	{fruitPie: 'Banana Cream Pie'},
-	// 	{savoryPie: 'Chicken Pot Pie'},
-	// 	{savoryPie: 'Spinach and Cheddar Tart'}, 
-	// 	{savoryPie: "Shepherd's Pie"},
-	// 	{internationalPie: 'Chicken Pot Pie'},
-	// 	{internationalPie: 'Aloo Pie'}, 
-	// 	{internationalPie: 'Linzertorte'}
-	// ];
-
 //helper function to render all pies to view
 var render = function() {
 	//empty existing pies
-	$pieslist.empty(); 
+	$piesList.empty(); 
 
 	//pass 'allPies' into the template function
 	var piesHtml = template({ pies: allPies}); 
 
+
+	//use find to get child element from form 
+	$("form").find("input[name='name'], textarea").val("");
+
 	//append html to the view
-	$pieslist.append(piesHtml); 
+	$piesList.append(piesHtml); 
 };
 
 // GET all pies on page load
@@ -49,11 +40,11 @@ $.get(baseUrl, function (data){
 	allPies = data.pies;
 
 	// render all pies to view
-	render (); 
+	render(); 
 }); 
 
 //listen for submit on form
-$createPie.on('submit', function (event){
+$("create-pies").on('submit', function (event){
 	event.preventDefault(); 
 
 	//serialize form data
@@ -69,17 +60,17 @@ $createPie.on('submit', function (event){
 	//render all pies to view
 	render(); 
 	}); 
+}); 
+
 
 	//reset the form 
 	$createPie[0].reset(); 
 	$createPie.find('input').first().focus(); 
-	}
+	}); 
 
-	//add event-handlers to pies for updating/deleting
-	$piesList
 
 	//for update: submit event on '.update-pie' form 
-	.on("submit", ".update-pie", function (event){
+	$("#piesList").on("submit", ".update-pie", function (event){
 		event.preventDefault(); 
 
 	//find the pie's id 
@@ -109,7 +100,7 @@ $createPie.on('submit', function (event){
 	});
 
 //for delete: click event on '.delete-pie' button
-.on('click', '.delete-pie', function (event){
+	$("#piesList").on('click', '.delete-pie', function (event){
 	event.preventDefault(); 
 
 	//find pie id
@@ -128,12 +119,14 @@ $createPie.on('submit', function (event){
 			//remove deleted pie from all pies
 			allPies.splice(allPies.indexOf(pieToDelete), 1); 
 		
-		//render all pies to view
-		render(); 
-		}
-	}); 
-	}); 
-}); 	
+          // render all piess to view
+          render();
+        }
+      });
+ 
+   });  
+
+ 
 
 
 
