@@ -34,7 +34,7 @@ var render = function() {
 
 // GET all pies on page load
 $.get(baseUrl, function (data){
-	console.log(data); 
+	console.log(data.pies); 
 
 	//set 'allPies' to pie data from API
 	allPies = data.pies;

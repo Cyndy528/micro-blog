@@ -20,33 +20,14 @@ mongoose.connect('mongodb://localhost/pie-app');
 // require Pie model 
 var Pie = require('./models/pie'); 
 
+//require Pie and Comment models
+var Pie = require('./models/pie'); 
+var Comment = require('./models/comment');
+
 // Set up routes
 app.get('/', function(req,res) {
 	res.render('index');
 });
-
- 
-// Test data
-	// var pies = [
-	// 	{pie: 'Bosenberry',
-	// 	kind: 'Fruit'}, 
-	// 	{pie: 'Apple',
-	// 	kind: 'Fruit'}, 
-	// 	{pie: 'Banana Cream Pie',
-	// 	kind: 'Fruit'},
-	// 	{pie: 'Chicken Pot Pie',
-	// 	kind: 'Savory'},
-	// 	{pie: 'Spinach and Cheddar Tart',
-	// 	kind: 'Savory'}, 
-	// 	{pie: "Shepherd's Pie",
-	// 	kind: 'Savory'},
-	// 	{pie: 'Minced Meat Pie',
-	// 	kind: 'International'},
-	// 	{pie: 'Aloo Pie',
-	// 	kind: 'International'}, 
-	// 	{pie: 'Linzertorte',
-	// 	kind: 'International'}
-	// ];
 
 // Set up pies API
 
@@ -59,13 +40,13 @@ app.get('/', function(req,res) {
   });
 
 // create new pie
-app.post('api/pies', function(req, res){
+app.post('/api/pies', function(req, res){
 
 	// create a new pie with form data
 	var newPies = new Pie (req.body); 
 
 	// save new pie in database
-	new Pie.save(function(err, savedPie){
+	 newPies.save(function(err, savedPie){
 		  res.json(savedPie);
 	}); 
 }); 
