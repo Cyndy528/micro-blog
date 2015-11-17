@@ -34,7 +34,7 @@ var render = function() {
 
 // GET all pies on page load
 $.get(baseUrl, function (data){
-	console.log(data); 
+	console.log(data.posts); 
 
 	//set 'allPies' to pie data from API
 	allPies = data.pies;
@@ -133,6 +133,9 @@ $("create-pie").on('submit', function (event){
 });  
 }); 
  
+//need to use handler to show/hide comments
+
+
 
 
 

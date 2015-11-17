@@ -3,6 +3,7 @@ var express = require('express');
 	app = express();
 	bodyParser = require('body-parser'); 
 	mongoose = require('mongoose'); 
+	Comment = require(".models/comment"); 
 
 //configure body-parser (for form data)
 app.use(bodyParser.urlencoded({ extended: true})); 
@@ -20,52 +21,41 @@ mongoose.connect('mongodb://localhost/pie-app');
 // require Pie model 
 var Pie = require('./models/pie'); 
 
+//require Pie and Comment models
+var Pie = require('./models/pie'); 
+var Comment = require('./models/comment');
+
 // Set up routes
 app.get('/', function(req,res) {
 	res.render('index');
 });
-
- 
-// Test data
-	// var pies = [
-	// 	{pie: 'Bosenberry',
-	// 	kind: 'Fruit'}, 
-	// 	{pie: 'Apple',
-	// 	kind: 'Fruit'}, 
-	// 	{pie: 'Banana Cream Pie',
-	// 	kind: 'Fruit'},
-	// 	{pie: 'Chicken Pot Pie',
-	// 	kind: 'Savory'},
-	// 	{pie: 'Spinach and Cheddar Tart',
-	// 	kind: 'Savory'}, 
-	// 	{pie: "Shepherd's Pie",
-	// 	kind: 'Savory'},
-	// 	{pie: 'Minced Meat Pie',
-	// 	kind: 'International'},
-	// 	{pie: 'Aloo Pie',
-	// 	kind: 'International'}, 
-	// 	{pie: 'Linzertorte',
-	// 	kind: 'International'}
-	// ];
 
 // Set up pies API
 
 //get all pies
   app.get('/api/pies', function (req, res) {
     // find all pies in database
-    Pie.find(function (err, allPies) {
-      res.json({ pies: allPies });
-    });
-  });
+    // Pie.find(function (err, allPies) {
+    //   res.json({ pies: allPies });
+    // });
+
+  	Post.find().populate("comments")
+  	.exec(function (err, allPosts){
+
+  	}
+  	res.json({posts: allPosts}); 
+	}); 
+}):  
+
 
 // create new pie
-app.post('api/pies', function(req, res){
+app.post('/api/pies', function(req, res){
 
 	// create a new pie with form data
 	var newPies = new Pie (req.body); 
 
 	// save new pie in database
-	new Pie.save(function(err, savedPie){
+	 newPies.save(function(err, savedPie){
 		  res.json(savedPie);
 	}); 
 }); 
@@ -113,6 +103,50 @@ app.delete('api/pies/:id', function(req, res){
 	      res.json(deletedPie);
 	  });
 	});
+//add comments to blog post 
+app.post('api/posts/:postID/comments'), 
+function(req, res) {
+	//get post ID
+	var postId = req.params.postID; 
+
+	Post.findOne({_id: postId}),function(err, foundPost) 
+		//create new comment
+	var newComment = newComment(req.body); 
+	//save new comment in database
+	newComment.save(function (err, savedComment){
+
+	//add comment to post (update blog post)
+	foundPost.comment.push(savedComment); 
+
+	//save post
+	foundPost.save(function(err, savedPost){
+		res.json(savedPost); 
+					}); 
+				});
+			}); 
+
+		}); 
+
+//delete comments from blog post 
+app.delete('/api/posts/:postId/comments/:commentId', function(req, res){
+	// get blog post and comment ID from url params and save to variable
+	var postId = req. params.postId; 
+	var commentId = req.params.commentId; 
+
+
+	//find blog post in database by ID 
+
+	Post.findOne ({_id: postId}, function(err, foundPost){
+		var commentIndex = foundPost.comments.indexOf(commentId); 
+		//remove comment from post
+
+		foundPost.comment.splice(commentIndex, 1); 
+		//save post
+		foundPost.save(function (err, savedPost){
+			res.json(savedPost); 
+		}): 
+	}); 
+}); 
 
 // listen on port 3000
 app.listen( 3000, function(){
