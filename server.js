@@ -57,6 +57,35 @@ app.get('/login', function(req,res) {
 	res.render('login');
 });
 
+//log out user
+app.get('/logout', function (req, res){
+	req.logout(); 
+	res.redirect('/'); 
+}); 
+
+app.get('/profile', function (req, res) {
+	res.render('profile', { user: req.user}); 
+}); 
+
+//sign up new user, then log them in 
+//hashes and salts password, saves new user to db
+app.post('signup', function (req, res){
+	User.register(new User ({ username: req.body.username}), req.body.password, 
+		function (err, newUser) {
+			passport.authenticate('local')(req, res, function(){
+				//res.send('Signed Up!'); 
+				res.redirect('/profile')
+			}); 
+		}
+	); 
+}); 
+
+//log in user
+app.post('/login', passport.athenticate('local'), function (req, res) {
+	//res.send('Logged In!'); 
+	res.redirect('/profile')
+}); 
+
 //log in user
 app.post('/login', passport.authenticate('local'), function (req, res){
 	res.send('Logged In!'); 
