@@ -45,9 +45,11 @@ mongoose.connect('mongodb://localhost/pie-app');
 // require Pie model 
 var Pie = require('./models/pie'); 
 
-// Set up routes
-app.get('/', function(req,res) {
-	res.render('index');
+//AUTH ROUTES
+
+//show signup view
+app.get('/signup', function(req,res) {
+	res.render('signup');
 });
 
 // Set up pies API
@@ -61,16 +63,16 @@ app.get('/', function(req,res) {
  }); 
 
 
-// create new pie
-app.post('/api/pies', function(req, res){
-
-	// create a new pie with form data
-	var newPies = new Pie (req.body); 
-
-	// save new pie in database
-	 newPies.save(function(err, savedPie){
-		  res.json(savedPie);
-	}); 
+//sign up new user, then logs them in 
+//hashes and salts password, saves new user in db
+app.post('/signup', function (req, res){
+	User.register(new User({ username: req.body.username }), req.body.password, 
+		function (err, newUser){
+			passport.authenticate('local')(req, res, function() {
+				res.send('Signed Up!'); 
+			}); 
+		}
+	); 
 }); 
 
 // get a single pie
