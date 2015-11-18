@@ -5,6 +5,25 @@ var express = require('express'),
 	mongoose = require('mongoose'), 
 	Comment = require("./models/comment"); 
 
+//additions for auth
+	cookieParser = require('cookie-parser'), 
+	session = require('express-session'), 
+	passport = require('passport'), 
+	LocalStrategy = require('passport-local').Strategy; 
+
+//middleware for auth
+app.use(cookieParser()); 
+app.use(session({
+	secret: 'supersecretkey', 
+	resave: false, 
+	saveUninitialized: false
+})); 
+app.use(passport.initialize()); 
+app.use(passport.session()); 
+
+
+
+
 //configure body-parser (for form data)
 app.use(bodyParser.urlencoded({ extended: true})); 
 
