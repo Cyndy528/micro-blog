@@ -52,6 +52,16 @@ app.get('/signup', function(req,res) {
 	res.render('signup');
 });
 
+//show login view
+app.get('/login', function(req,res) {
+	res.render('login');
+});
+
+//log in user
+app.post('/login', passport.authenticate('local'), function (req, res){
+	res.send('Logged In!'); 
+}); 
+
 // Set up pies API
 
 //get all pies
