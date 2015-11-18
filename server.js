@@ -4,8 +4,8 @@ var express = require('express'),
 	bodyParser = require('body-parser'), 
 	mongoose = require('mongoose'), 
 	Comment = require('./models/comment'), 
-	Post = require('./models/post'), 
-	User = require('.models/user'); 
+	Pie = require('./models/pie'), 
+	User = require('./models/user'); 
 
 //additions for auth
 	cookieParser = require('cookie-parser'), 

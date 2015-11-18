@@ -3,17 +3,17 @@ var mongoose = require('mongoose'),
 	passportLocalMongoose = require('passport-local-mongoose'); 
 
 //defining the UserSchema and assigned attributes
-var UserSchema = new Schema ({
+var userSchema = new Schema ({
 	username: String, 
-	password: String, 
+	password: String
 }); 
 
 //takes care of hashing and salting the user's plain-test password when they sign up
 //Compares the password the user enters at login to their hashed and salted password stored in the db
-UserSchema.plugin(passportLocalMongoose); 
+userSchema.plugin(passportLocalMongoose); 
 
 //create User model and export it
-var User = mongoose.model('User, UserSchema'); 
+var User = mongoose.model('User', userSchema); 
 module.exports = User; 
 
 
