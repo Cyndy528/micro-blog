@@ -11,7 +11,7 @@ var express = require('express'),
 	passport = require('passport'), 
 	LocalStrategy = require('passport-local').Strategy; 
 
-//middleware for auth
+//middleware for auth that I just installed 
 app.use(cookieParser()); 
 app.use(session({
 	secret: 'supersecretkey', 
@@ -20,6 +20,11 @@ app.use(session({
 })); 
 app.use(passport.initialize()); 
 app.use(passport.session()); 
+
+//passport config - allows users to sign up, log in, and log out of the application
+passport.use(new LocalStrategy(User.authenticate())); 
+passport.serializeUser(User.serializeUser()); 
+passport.deserializeUser(User.deserializeUser()); 
 
 
 
