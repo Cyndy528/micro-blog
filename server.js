@@ -3,7 +3,9 @@ var express = require('express'),
 	app = express(),
 	bodyParser = require('body-parser'), 
 	mongoose = require('mongoose'), 
-	Comment = require("./models/comment"); 
+	Comment = require('./models/comment'), 
+	Post = require('./models/post'), 
+	User = require('.models/user'); 
 
 //additions for auth
 	cookieParser = require('cookie-parser'), 
@@ -25,8 +27,6 @@ app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate())); 
 passport.serializeUser(User.serializeUser()); 
 passport.deserializeUser(User.deserializeUser()); 
-
-
 
 
 //configure body-parser (for form data)
