@@ -1,9 +1,9 @@
 // require express and other modules
-var express = require('express'); 
-	app = express();
-	bodyParser = require('body-parser'); 
-	mongoose = require('mongoose'); 
-	Comment = require(".models/comment"); 
+var express = require('express'), 
+	app = express(),
+	bodyParser = require('body-parser'), 
+	mongoose = require('mongoose'), 
+	Comment = require("./models/comment"); 
 
 //configure body-parser (for form data)
 app.use(bodyParser.urlencoded({ extended: true})); 
@@ -21,10 +21,6 @@ mongoose.connect('mongodb://localhost/pie-app');
 // require Pie model 
 var Pie = require('./models/pie'); 
 
-//require Pie and Comment models
-var Pie = require('./models/pie'); 
-var Comment = require('./models/comment');
-
 // Set up routes
 app.get('/', function(req,res) {
 	res.render('index');
@@ -35,17 +31,10 @@ app.get('/', function(req,res) {
 //get all pies
   app.get('/api/pies', function (req, res) {
     // find all pies in database
-    // Pie.find(function (err, allPies) {
-    //   res.json({ pies: allPies });
-    // });
-
-  	Post.find().populate("comments")
-  	.exec(function (err, allPosts){
-
-  	}
-  	res.json({posts: allPosts}); 
-	}); 
-}):  
+    Pie.find(function (err, allPies) {
+      res.json({ pies: allPies });
+    });
+ }); 
 
 
 // create new pie
@@ -96,7 +85,7 @@ Pie.findOne({ _id: pieId }, function (err, foundPie) {
 app.delete('api/pies/:id', function(req, res){
 
 	// get pie id from url params ('req.params')
-	var pieID= req.params.id; 
+	var pieId= req.params.id; 
 
 	//find pie to delete by its id and remove 
 	  Pie.findOneAndRemove({ _id: pieId }, function (err, deletedPie) {
@@ -104,28 +93,28 @@ app.delete('api/pies/:id', function(req, res){
 	  });
 	});
 //add comments to blog post 
-app.post('api/posts/:postID/comments'), 
-function(req, res) {
-	//get post ID
-	var postId = req.params.postID; 
+app.post('/api/posts/:postId/comments', function (req, res) {
+	
+	//set the value fo the post id
+	var postId = req.params.postId; 
 
-	Post.findOne({_id: postId}),function(err, foundPost) 
+	//store new comment in mememory 
+	var newComments = new Comment(req.body.comments); 
+	
+	//find post in database by id and add new comment 
+	Post.findOne({_id: postId}),function (err, foundPost){
+		
 		//create new comment
-	var newComment = newComment(req.body); 
-	//save new comment in database
-	newComment.save(function (err, savedComment){
+		//add comment to post (update blog post)
+		foundPost.comments.push(newComment); 
 
-	//add comment to post (update blog post)
-	foundPost.comment.push(savedComment); 
-
-	//save post
-	foundPost.save(function(err, savedPost){
-		res.json(savedPost); 
-					}); 
-				});
-			}); 
-
+		//save post
+		foundPost.save(function (err, savedPost){
+		res.json(newComments); 
 		}); 
+	}; 
+});  
+
 
 //delete comments from blog post 
 app.delete('/api/posts/:postId/comments/:commentId', function(req, res){
@@ -144,7 +133,7 @@ app.delete('/api/posts/:postId/comments/:commentId', function(req, res){
 		//save post
 		foundPost.save(function (err, savedPost){
 			res.json(savedPost); 
-		}): 
+		}); 
 	}); 
 }); 
 
