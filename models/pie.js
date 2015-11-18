@@ -1,5 +1,6 @@
 var mongoose = require ('mongoose'), 
-	Schema = mongoose.Schema; 
+	Schema = mongoose.Schema,
+	Comment = require('./comment');
 
 var PieSchema = new Schema ({
 	pie: String, 
